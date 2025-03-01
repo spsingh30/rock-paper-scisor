@@ -61,6 +61,16 @@
             font-weight: bold;
             color: #333;
         }
+
+        .score {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .score span {
+            color: #d9534f;
+        }
     </style>
 </head>
 
@@ -78,6 +88,9 @@
         <h2>Your Choice: <span id="userChoice" class="choice">-</span></h2>
         <h2>Computer Choice: <span id="computerChoice" class="choice">-</span></h2>
         <h2>Result: <span id="output">-</span></h2>
+
+        <h2 class="score">Your Score: <span id="userScore">0</span> | Computer Score: <span id="computerScore">0</span></h2>
+
         <h1 id="finalresult"></h1>
     </div>
 
@@ -119,6 +132,10 @@
                 document.getElementById("output").innerText = "Computer Wins!";
                 computerscore++;
             }
+
+            // Update the scores
+            document.getElementById("userScore").innerText = userscore;
+            document.getElementById("computerScore").innerText = computerscore;
 
             if (round >= max) {
                 winner();
