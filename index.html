@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stone Paper Scissors Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .container {
+            margin-top: 50px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            font-size: 20px;
+            font-weight: bold;
+            color: #007bff;
+            margin-top: 10px;
+        }
+
+        #finalresult {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: green;
+        }
+
+        .choice {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to the Game</h1>
+        <h2>Your competitor is the computer.</h2>
+        <h1><span id="round">Round: 1</span></h1>
+
+        <h2>Choose your option</h2>
+        <button onclick="playGame(0)">Stone</button>
+        <button onclick="playGame(1)">Paper</button>
+        <button onclick="playGame(2)">Scissors</button>
+
+        <h2>Your Choice: <span id="userChoice" class="choice">-</span></h2>
+        <h2>Computer Choice: <span id="computerChoice" class="choice">-</span></h2>
+        <h2>Result: <span id="output">-</span></h2>
+        <h1 id="finalresult"></h1>
+    </div>
+
+    <script>
+        const arr = ["stone", "paper", "scissors"];
+        let round = 1;
+        const max = 5;
+        let userscore = 0;
+        let computerscore = 0;
+        let gameOver = false; 
+
+        function computerChoice() {
+            let random = Math.floor(Math.random() * 3);
+            return arr[random];
+        }
+
+        function playGame(userSelectionIndex) {
+            if (gameOver) {
+                alert("Game over! Refresh to play again.");
+                return;
+            }
+
+            let userSelection = arr[userSelectionIndex];
+            let computerSelection = computerChoice();
+
+            document.getElementById("userChoice").innerText = userSelection;
+            document.getElementById("computerChoice").innerText = computerSelection;
+
+            if (userSelection === computerSelection) {
+                document.getElementById("output").innerText = "Game Tie!";
+            } else if (
+                (userSelection === "stone" && computerSelection === "scissors") ||
+                (userSelection === "paper" && computerSelection === "stone") ||
+                (userSelection === "scissors" && computerSelection === "paper")
+            ) {
+                document.getElementById("output").innerText = "User Wins!";
+                userscore++;
+            } else {
+                document.getElementById("output").innerText = "Computer Wins!";
+                computerscore++;
+            }
+
+            if (round >= max) {
+                winner();
+                gameOver = true;
+            } else {
+                round++;
+                document.getElementById("round").innerText = `Round: ${round}`;
+            }
+        }
+
+        function winner() {
+            let finalresult;
+            if (userscore > computerscore) {
+                finalresult = "You are the Winner!";
+            } else if (userscore < computerscore) {
+                finalresult = "You Lost! Computer Wins!";
+            } else {
+                finalresult = "It's an Overall Tie!";
+            }
+            document.getElementById("finalresult").innerText = finalresult;
+        }
+    </script>
+</body>
+
+</html>
